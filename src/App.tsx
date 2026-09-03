@@ -107,16 +107,14 @@ function App() {
     recognition.continuous = false
     recognition.interimResults = false
     recognition.lang = 'en-US'
-    recognition.onresult = (event) => {
+    recognition.onresult = (event: any) => {
       const transcript = Array.from(event.results as any)
         .map((result: any) => result[0]?.transcript || '')
         .join(' ')
       handleTranscript(transcript)
     }
-    recognition.onerror = () => setStatus('READY')
-    recognition.onend = () => {
-      if (status === 'LISTENING') setStatus('READY')
-    }
+    recognition.onerror = (_event: any) => setStatus('READY')
+    recognition.onend = () => setStatus('READY')
     recognitionRef.current = recognition
     setStatus('LISTENING')
     recognition.start()
